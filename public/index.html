@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nevera IA — recetas con lo que tienes</title>
+<style>
+:root{--bg:#f5f7f2;--card:#fff;--ink:#20312a;--muted:#68786f;--green:#247653;--lime:#d8f28b;--line:#e1e8df;--soft:#edf5e9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+header{background:#fff;border-bottom:1px solid var(--line);padding:16px 5vw;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;font-size:1.12rem}.logo{width:38px;height:38px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:white;font-size:21px}
+.pill{font-size:.78rem;color:var(--green);background:var(--soft);padding:6px 10px;border-radius:99px;font-weight:700}
+main{max-width:1100px;margin:auto;padding:30px 20px 60px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;margin-bottom:26px}
+h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.03;letter-spacing:-.045em;margin:12px 0 18px}.accent{color:var(--green)}p{color:var(--muted);margin:0 0 18px}.eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:var(--green)}
+.hero-art{background:#dcebd7;border-radius:28px;padding:25px;min-height:260px;display:grid;place-items:center;position:relative;overflow:hidden}.fridge{font-size:105px;filter:drop-shadow(0 10px 8px #8aa78a55)}.floating{position:absolute;background:white;border-radius:16px;padding:10px 13px;box-shadow:0 8px 24px #234b2520;font-size:.88rem;font-weight:700}.f1{top:24px;left:18px}.f2{bottom:25px;right:18px}
+.layout{display:grid;grid-template-columns:.95fr 1.05fr;gap:20px}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 8px 28px #213a2410}.panel h2{font-size:1.25rem;margin:0 0 6px}.sub{font-size:.9rem;margin-bottom:18px}
+.upload{border:1.5px dashed #a8c4aa;border-radius:17px;padding:20px;text-align:center;background:#fbfdf9;cursor:pointer;display:block}.upload input{display:none}.upload .camera{font-size:30px}.upload strong{display:block;margin:5px 0}.preview{max-width:100%;max-height:180px;border-radius:12px;margin:12px auto 0;display:none}
+.note{font-size:.78rem;color:var(--muted);margin:10px 0 0}.field{display:flex;gap:8px;margin:14px 0 16px}.field input{flex:1;min-width:0}.input, input[type=text],select{width:100%;border:1px solid var(--line);background:white;border-radius:12px;padding:12px 13px;font:inherit;color:var(--ink);outline-color:#8fbd9a}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:750}.primary{background:var(--green);color:white}.primary:hover{background:#185b3d}.secondary{background:var(--soft);color:var(--green)}.small{padding:9px 12px}
+.ingredients{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.chip{border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 11px;border-radius:999px;font-size:.88rem}.chip.active{background:#e2f5d2;border-color:#9ecb91;color:#205b38}.chip:before{content:"+";margin-right:5px}.chip.active:before{content:"✓"}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.divider{height:1px;background:var(--line);margin:18px 0}.filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}.results-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.results-top h2{margin:0}.recipe-list{display:grid;gap:12px}.recipe{border:1px solid var(--line);border-radius:17px;padding:16px;background:#fff}.recipe h3{margin:0 0 7px;font-size:1.08rem}.meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.8rem;color:var(--muted);margin-bottom:10px}.tag{background:#f1f5ed;padding:4px 8px;border-radius:99px}.recipe p{font-size:.91rem;margin:0 0 12px}.recipe details{border-top:1px solid var(--line);padding-top:10px}.recipe summary{font-weight:750;cursor:pointer;color:var(--green)}.recipe ol{padding-left:21px;color:var(--muted);margin-bottom:0}.empty{padding:26px;text-align:center;background:#fafcf8;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:25px}.toast{margin-top:12px;font-size:.85rem;color:var(--green);min-height:20px}
+@media(max-width:760px){header{padding:13px 18px}.hero,.layout{grid-template-columns:1fr}.hero{gap:16px}.hero-art{min-height:200px}.fridge{font-size:82px}main{padding:22px 14px 40px}.panel{padding:18px}.filters{grid-template-columns:1fr 1fr}.pill{display:none}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">✳</div> Nevera IA</div><span class="pill">TU COCINA, CON IDEAS</span></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">Menos desperdicio · Más sabor</div><h1>¿Qué hay en tu nevera?<br><span class="accent">Hagamos magia.</span></h1><p>Agrega los ingredientes que tienes y descubre ideas para cocinar hoy. Esta versión de prueba funciona en tu navegador, sin crear una cuenta.</p><button class="primary" onclick="document.getElementById('ingredientsTitle').scrollIntoView({behavior:'smooth'})">Encontrar recetas ↓</button></div>
+<div class="hero-art"><span class="floating f1">🥦 Ingredientes frescos</span><div class="fridge">🧊</div><span class="floating f2">✨ Ideas a tu medida</span></div>
+</section>
+<div class="layout">
+<section class="panel">
+<h2>1. Tu nevera</h2><p class="sub">Sube una foto y deja que la IA detecte los alimentos.</p>
+<label class="upload"><input id="photo" type="file" accept="image/*"><span class="camera">📸</span><strong>Subir foto de tu nevera</strong><span class="note">Elige una foto clara de los alimentos de tu nevera.</span><img id="preview" class="preview" alt="Vista previa de la nevera"></label>
+<button class="secondary" id="scanPhoto" style="width:100%;margin-top:10px" disabled>🔎 Identificar productos de la foto</button>
+<div class="note">La IA puede equivocarse: revisa los ingredientes detectados antes de cocinar.</div>
+<div class="divider"></div>
+<div class="row"><h2 id="ingredientsTitle">2. Ingredientes</h2><span id="count" class="pill">0 elegidos</span></div>
+<p class="sub">Toca los ingredientes disponibles o añade otros.</p>
+<div id="ingredients" class="ingredients"></div>
+<div class="field"><input id="customIngredient" type="text" placeholder="Ej.: mandioca, queso Paraguay"><button class="secondary" id="addIngredient">Añadir</button></div>
+<div class="divider"></div>
+<div class="filters"><label><span class="note">Tiempo máximo</span><select id="time"><option value="15">15 minutos</option><option value="30" selected>30 minutos</option><option value="60">60 minutos</option></select></label><label><span class="note">Tipo de comida</span><select id="meal"><option value="all">Cualquiera</option><option value="breakfast">Desayuno</option><option value="lunch">Almuerzo</option><option value="dinner">Cena</option><option value="snack">Merienda</option></select></label></div>
+<button class="primary" style="width:100%" id="generate">✨ Generar recetas</button><div class="toast" id="toast" aria-live="polite"></div>
+</section>
+<section class="panel">
+<div class="results-top"><div><h2>Ideas para cocinar</h2><p class="sub" style="margin:4px 0 0">Recetas sugeridas según tus ingredientes.</p></div><span class="pill">CON IA</span></div>
+<div id="results" class="recipe-list"><div class="empty">🥘<br><strong>Tus recetas aparecerán aquí</strong><br>Selecciona al menos un ingrediente y pulsa “Generar recetas”.</div></div>
+</section>
+</div>
+<footer>Nevera IA · Prototipo gratuito · Las sugerencias son orientativas; verifica alergias, conservación y cocción segura de los alimentos.</footer>
+</main>
+<script>
+const baseIngredients=['Huevo','Tomate','Cebolla','Ajo','Queso','Leche','Arroz','Pasta','Pollo','Carne molida','Papa','Zanahoria','Morrón','Espinaca','Lechuga','Pan','Banana','Avena','Poroto','Mandioca'];
+let selected=new Set(['Huevo','Tomate','Queso']);
+const list=document.getElementById('ingredients');
+function renderIngredients(){list.innerHTML='';baseIngredients.forEach(name=>{const b=document.createElement('button');b.className='chip'+(selected.has(name)?' active':'');b.textContent=name;b.onclick=()=>{selected.has(name)?selected.delete(name):selected.add(name);renderIngredients()};list.appendChild(b)});document.getElementById('count').textContent=selected.size+' elegidos'}
+function addCustom(){const input=document.getElementById('customIngredient');const value=input.value.trim();if(!value)return;const existing=baseIngredients.find(x=>x.toLowerCase()===value.toLowerCase());const name=existing||value.charAt(0).toUpperCase()+value.slice(1);if(!baseIngredients.includes(name))baseIngredients.push(name);selected.add(name);input.value='';renderIngredients();document.getElementById('toast').textContent='Ingrediente añadido: '+name}
+document.getElementById('addIngredient').onclick=addCustom;document.getElementById('customIngredient').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addCustom()}});
+let selectedPhoto = null;
+document.getElementById('photo').addEventListener('change',e=>{
+ const file=e.target.files[0]; if(!file)return;
+ selectedPhoto=file;
+ const img=document.getElementById('preview'); img.src=URL.createObjectURL(file); img.style.display='block';
+ document.getElementById('scanPhoto').disabled=false;
+ document.getElementById('toast').textContent='Foto cargada. Pulsa “Identificar productos” para analizarla con IA.';
+});
+document.getElementById('scanPhoto').addEventListener('click', async ()=>{
+ if(!selectedPhoto)return;
+ const btn=document.getElementById('scanPhoto'); btn.disabled=true; btn.textContent='⏳ Analizando imagen…';
+ document.getElementById('toast').textContent='La IA está revisando la fotografía. Puede tardar unos segundos.';
+ try {
+  const form=new FormData(); form.append('photo',selectedPhoto);
+  const response=await fetch('/api/analyze',{method:'POST',body:form});
+  const data=await response.json();
+  if(!response.ok) throw new Error(data.error||'No se pudo analizar la imagen.');
+  if(!Array.isArray(data.products)||!data.products.length) throw new Error('No se detectaron productos con suficiente claridad. Prueba otra foto con más luz.');
+  let added=[];
+  data.products.forEach(p=>{
+   if(!p.name)return;
+   const clean=String(p.name).trim();
+   const existing=baseIngredients.find(x=>x.toLowerCase()===clean.toLowerCase());
+   const name=existing||clean.charAt(0).toUpperCase()+clean.slice(1);
+   if(!baseIngredients.some(x=>x.toLowerCase()===name.toLowerCase()))baseIngredients.push(name);
+   selected.add(name); added.push(name);
+  });
+  renderIngredients();
+  document.getElementById('toast').textContent='Detectados: '+added.join(', ')+'. Revisá la lista: la IA puede equivocarse.';
+  document.getElementById('ingredientsTitle').scrollIntoView({behavior:'smooth',block:'center'});
+ } catch(err) {
+  document.getElementById('toast').textContent='Error: '+err.message;
+ } finally {btn.disabled=false;btn.textContent='🔎 Identificar productos de la foto';}
+});
+async function generate(){
+ const ingredients=[...selected];
+ const maxMinutes=Number(document.getElementById('time').value);
+ const meal=document.getElementById('meal').value;
+ const out=document.getElementById('results');
+ const btn=document.getElementById('generate');
+ if(!ingredients.length){out.innerHTML='<div class="empty">Primero identifica la foto o selecciona algunos ingredientes.</div>';return}
+ btn.disabled=true;btn.textContent='⏳ Creando recetas…';
+ document.getElementById('toast').textContent='Gemini está preparando recetas según tus ingredientes.';
+ try{
+  const response=await fetch('/api/recipes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ingredients,maxMinutes,meal})});
+  const data=await response.json(); if(!response.ok)throw new Error(data.error||'No se pudieron generar las recetas.');
+  const recipes=Array.isArray(data.recipes)?data.recipes:[];out.innerHTML='';
+  if(!recipes.length){out.innerHTML='<div class="empty">No se generaron recetas. Prueba con otros ingredientes.</div>';return}
+  recipes.forEach(r=>{
+   const card=document.createElement('article');card.className='recipe';
+   const title=document.createElement('h3');title.textContent=r.title;card.appendChild(title);
+   const meta=document.createElement('div');meta.className='meta';
+   [`⏱ ${r.timeMinutes} min`,r.category||'Receta'].forEach(t=>{const tag=document.createElement('span');tag.className='tag';tag.textContent=t;meta.appendChild(tag)});card.appendChild(meta);
+   const desc=document.createElement('p');desc.textContent=r.description;card.appendChild(desc);
+   const available=document.createElement('div');available.className='note';available.innerHTML='<strong>Ingredientes que puedes usar:</strong> ';available.appendChild(document.createTextNode((r.availableIngredients||[]).join(', ')||ingredients.join(', ')));card.appendChild(available);
+   if((r.missingIngredients||[]).length){const missing=document.createElement('div');missing.className='note';missing.innerHTML='<strong>Te faltaría:</strong> ';missing.appendChild(document.createTextNode(r.missingIngredients.join(', ')));card.appendChild(missing)}
+   const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Ver preparación';details.appendChild(summary);const ol=document.createElement('ol');(r.steps||[]).forEach(step=>{const li=document.createElement('li');li.textContent=step;ol.appendChild(li)});details.appendChild(ol);card.appendChild(details);
+   const link=document.createElement('a');link.href='https://www.youtube.com/results?search_query='+encodeURIComponent(r.youtubeSearch||r.title+' receta tutorial español');link.target='_blank';link.rel='noopener noreferrer';link.className='primary';link.style.cssText='display:block;text-align:center;text-decoration:none;margin-top:14px';link.textContent='▶ Ver tutorial en YouTube';card.appendChild(link);out.appendChild(card);
+  });
+  document.getElementById('toast').textContent='¡Listo! Gemini creó '+recipes.length+' recetas. Los enlaces abren tutoriales relacionados en YouTube.';
+ }catch(err){out.innerHTML='<div class="empty">No se pudieron generar las recetas todavía.</div>';document.getElementById('toast').textContent='Error: '+err.message}
+ finally{btn.disabled=false;btn.textContent='✨ Generar recetas'}
+}
+document.getElementById('generate').onclick=generate;renderIngredients();
+</script>
+</body>
+</html>
